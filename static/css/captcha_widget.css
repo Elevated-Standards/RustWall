@@ -1,0 +1,54 @@
+/* CAPTCHA Widget Styles */
+.clock-captcha-widget {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.clock-captcha-widget label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.clock-captcha-widget .captcha-image-container {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.clock-captcha-widget .captcha-image-container img {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+.clock-captcha-widget .time-input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.clock-captcha-widget .time-input-container input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.clock-captcha-widget .refresh-container {
+    text-align: center;
+}
+
+.clock-captcha-widget .refresh-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.clock-captcha-widget .refresh-link:hover {
+    color: #333;
+}

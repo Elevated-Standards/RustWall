@@ -1,5 +1,5 @@
 //! Hidden Service DDoS Mitigation
-//! 
+//!
 //! Specialized protection against Tor-based DDoS attacks targeting hidden services.
 //! Implements adaptive rate limiting, traffic pattern analysis, and circuit-based filtering.
 
@@ -22,8 +22,11 @@ pub enum AttackPattern {
 #[derive(Debug, Clone)]
 struct TrafficSample {
     timestamp: Instant,
+    #[allow(dead_code)]
     source_ip: Option<IpAddr>,
+    #[allow(dead_code)]
     request_size: u64,
+    #[allow(dead_code)]
     circuit_id: Option<String>,
 }
 
@@ -54,6 +57,7 @@ impl Default for DDoSConfig {
 /// Circuit information tracking
 #[derive(Debug, Clone)]
 struct CircuitInfo {
+    #[allow(dead_code)]
     circuit_id: String,
     source_ip: Option<IpAddr>,
     created_at: Instant,
@@ -187,12 +191,12 @@ impl DDoSMitigation {
                 if circuit.suspicious_score > self.config.mitigation_threshold {
                     return Ok(false);
                 }
-                
+
                 if source_ip.is_some() {
                     let circuits_for_ip = self.circuit_tracker.values()
                         .filter(|c| c.source_ip == source_ip)
                         .count();
-                    
+
                     if circuits_for_ip >= self.config.max_circuits_per_ip as usize {
                         return Ok(false);
                     }
@@ -240,7 +244,7 @@ impl DDoSMitigation {
     /// Update IP tracking information
     fn update_ip_tracking(&mut self, ip: IpAddr, now: Instant) {
         let (count, window_start) = self.ip_request_counts.entry(ip).or_insert((0, now));
-        
+
         if now.duration_since(*window_start) >= Duration::from_secs(1) {
             *count = 1;
             *window_start = now;
@@ -282,7 +286,7 @@ impl DDoSMitigation {
         }
 
         let request_rate = recent_samples.len() as f64 / self.config.analysis_window.as_secs_f64();
-        
+
         if request_rate > self.config.max_requests_per_second as f64 * 2.0 {
             AttackPattern::HighFrequency
         } else if self.circuit_tracker.len() > self.config.max_circuits_per_ip as usize * 10 {
@@ -299,7 +303,7 @@ impl DDoSMitigation {
         let recent_count = self.traffic_samples.iter()
             .filter(|s| s.timestamp.elapsed() < Duration::from_secs(1))
             .count();
-        
+
         recent_count as f64 / self.config.max_requests_per_second as f64
     }
 
@@ -323,7 +327,7 @@ impl DDoSMitigation {
         } else if traffic_load < 0.5 {
             self.adaptive_limit = (self.adaptive_limit as f64 * 1.1) as u32;
         }
-        
+
         self.adaptive_limit = self.adaptive_limit
             .max(self.config.max_requests_per_second / 4)
             .min(self.config.max_requests_per_second * 2);

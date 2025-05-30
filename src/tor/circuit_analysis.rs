@@ -1,5 +1,5 @@
 //! Circuit Analysis
-//! 
+//!
 //! Monitor and analyze Tor circuit patterns for anomalies and security threats.
 //! Detects suspicious circuit behavior, timing attacks, and circuit correlation attempts.
 
@@ -152,7 +152,7 @@ impl CircuitAnalysis {
         path: CircuitPath,
     ) -> TorSecurityResult<()> {
         let now = Instant::now();
-        
+
         let circuit_info = CircuitInfo {
             circuit_id: circuit_id.clone(),
             state: CircuitState::Building,
@@ -193,15 +193,15 @@ impl CircuitAnalysis {
     ) -> TorSecurityResult<()> {
         if let Some(circuit) = self.circuits.get_mut(circuit_id) {
             let now = Instant::now();
-            
+
             // Calculate build time when circuit is built
             if new_state == CircuitState::Built && circuit.state == CircuitState::Building {
                 circuit.metrics.build_time = now.duration_since(circuit.created_at);
             }
-            
+
             circuit.state = new_state.clone();
             circuit.last_activity = now;
-            
+
             // Move to history if circuit is closed
             if matches!(new_state, CircuitState::Closed | CircuitState::Failed) {
                 circuit.metrics.lifetime = now.duration_since(circuit.created_at);
@@ -226,7 +226,7 @@ impl CircuitAnalysis {
             circuit.metrics.bytes_sent += bytes_sent;
             circuit.metrics.bytes_received += bytes_received;
             circuit.metrics.request_count += 1;
-            
+
             // Update average response time
             let total_time = circuit.metrics.average_response_time * (circuit.metrics.request_count - 1) + response_time;
             circuit.metrics.average_response_time = total_time / circuit.metrics.request_count;
@@ -309,7 +309,7 @@ impl CircuitAnalysis {
                 let recent_builds = timings.iter()
                     .filter(|&&t| circuit.created_at.duration_since(t) < Duration::from_secs(60))
                     .count();
-                
+
                 if recent_builds > 5 {
                     return Some(CircuitAnomaly::RapidRebuild);
                 }
@@ -319,6 +319,7 @@ impl CircuitAnalysis {
     }
 
     /// Check for rapid circuit rebuild patterns by circuit ID
+    #[allow(dead_code)]
     fn check_rapid_rebuild_by_id(&self, circuit_id: &str) -> Option<CircuitAnomaly> {
         if let Some(circuit) = self.circuits.get(circuit_id) {
             self.check_rapid_rebuild(circuit)
@@ -332,15 +333,16 @@ impl CircuitAnalysis {
         if circuit.metrics.build_time > self.config.max_build_time {
             return Some(CircuitAnomaly::UnusualTiming);
         }
-        
+
         if circuit.metrics.average_response_time > Duration::from_millis(10000) {
             return Some(CircuitAnomaly::UnusualTiming);
         }
-        
+
         None
     }
 
     /// Check for unusual timing patterns by circuit ID
+    #[allow(dead_code)]
     fn check_unusual_timing_by_id(&self, circuit_id: &str) -> Option<CircuitAnomaly> {
         if let Some(circuit) = self.circuits.get(circuit_id) {
             self.check_unusual_timing(circuit)
@@ -354,7 +356,7 @@ impl CircuitAnalysis {
         if circuit.path.path_length < 3 {
             return Some(CircuitAnomaly::SuspiciousPath);
         }
-        
+
         // Check for repeated path patterns
         let path_key = format!("{:?}", circuit.path);
         if let Some(&count) = self.path_patterns.get(&path_key) {
@@ -362,11 +364,12 @@ impl CircuitAnalysis {
                 return Some(CircuitAnomaly::SuspiciousPath);
             }
         }
-        
+
         None
     }
 
     /// Check for suspicious circuit paths by circuit ID
+    #[allow(dead_code)]
     fn check_suspicious_path_by_id(&self, circuit_id: &str) -> Option<CircuitAnomaly> {
         if let Some(circuit) = self.circuits.get(circuit_id) {
             self.check_suspicious_path(circuit)
@@ -381,7 +384,7 @@ impl CircuitAnalysis {
             let concurrent_circuits = self.circuits.values()
                 .filter(|c| c.source_ip == Some(ip) && c.circuit_id != circuit.circuit_id)
                 .count();
-            
+
             if concurrent_circuits > self.config.max_circuits_per_source as usize {
                 return Some(CircuitAnomaly::CorrelationAttempt);
             }
@@ -390,6 +393,7 @@ impl CircuitAnalysis {
     }
 
     /// Check for correlation attempts by circuit ID
+    #[allow(dead_code)]
     fn check_correlation_attempt_by_id(&self, circuit_id: &str) -> Option<CircuitAnomaly> {
         if let Some(circuit) = self.circuits.get(circuit_id) {
             self.check_correlation_attempt(circuit)
@@ -403,15 +407,16 @@ impl CircuitAnalysis {
         if circuit.metrics.request_count > 1000 {
             return Some(CircuitAnomaly::ExcessiveConnections);
         }
-        
+
         if circuit.metrics.bytes_sent > 100_000_000 || circuit.metrics.bytes_received > 100_000_000 {
             return Some(CircuitAnomaly::AbnormalTraffic);
         }
-        
+
         None
     }
 
     /// Check for excessive connections by circuit ID
+    #[allow(dead_code)]
     fn check_excessive_connections_by_id(&self, circuit_id: &str) -> Option<CircuitAnomaly> {
         if let Some(circuit) = self.circuits.get(circuit_id) {
             self.check_excessive_connections(circuit)

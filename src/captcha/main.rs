@@ -12,7 +12,7 @@ use serde::Deserialize;
 use std::sync::Arc;
 use tera::{Context, Tera};
 use tokio::time::{interval, Duration};
-use tower_http::cors::CorsLayer;
+use tower_http::{cors::CorsLayer, services::ServeDir};
 
 use captcha::{generate_captcha, ClockTime};
 use session::SessionStore;
@@ -192,6 +192,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .route("/captcha/verify", post(captcha_verify_handler))
         .route("/captcha/widget/:session_id", get(captcha_widget_handler))
         .route("/captcha/new", get(captcha_new_handler))
+        .nest_service("/static", ServeDir::new("static"))
         .layer(CorsLayer::permissive())
         .with_state(app_state);
 

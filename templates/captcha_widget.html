@@ -1,27 +1,24 @@
 <!-- Clock CAPTCHA Widget - Include this in your forms -->
-<div class="clock-captcha-widget" style="margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
-    <label for="captcha-time" style="display: block; margin-bottom: 10px; font-weight: bold;">
+<link rel="stylesheet" href="/static/css/captcha_widget.css">
+<div class="clock-captcha-widget">
+    <label for="captcha-time">
         Security Check: What time is shown on the clock?
     </label>
     
-    <div style="text-align: center; margin: 15px 0;">
-        <img src="/captcha/image/{{ session_id }}" alt="Clock CAPTCHA" width="150" height="150" 
-             style="border: 2px solid #ccc; border-radius: 5px;">
+    <div class="captcha-image-container">
+        <img src="/captcha/image/{{ session_id }}" alt="Clock CAPTCHA" width="150" height="150">
     </div>
     
-    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: 15px 0;">
-        <input type="number" name="captcha_hour" min="1" max="12" placeholder="Hour" required
-               style="width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 3px; text-align: center;">
+    <div class="time-input-container">
+        <input type="number" name="captcha_hour" min="1" max="12" placeholder="Hour" required>
         <span>:</span>
-        <input type="number" name="captcha_minute" min="0" max="59" placeholder="Min" required
-               style="width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 3px; text-align: center;">
+        <input type="number" name="captcha_minute" min="0" max="59" placeholder="Min" required>
     </div>
     
     <input type="hidden" name="captcha_session_id" value="{{ session_id }}">
     
-    <div style="text-align: center;">
-        <a href="javascript:void(0)" onclick="refreshCaptcha()" 
-           style="color: #666; text-decoration: none; font-size: 12px;">🔄 Refresh CAPTCHA</a>
+    <div class="refresh-container">
+        <a href="javascript:void(0)" onclick="refreshCaptcha()" class="refresh-link">🔄 Refresh CAPTCHA</a>
     </div>
 </div>
 
