@@ -18,13 +18,6 @@
     <input type="hidden" name="captcha_session_id" value="{{ session_id }}">
     
     <div class="refresh-container">
-        <a href="javascript:void(0)" onclick="refreshCaptcha()" class="refresh-link">🔄 Refresh CAPTCHA</a>
+        <a href="/captcha/form" class="refresh-link">🔄 Refresh CAPTCHA</a>
     </div>
 </div>
-
-<script>
-function refreshCaptcha() {
-    // Reload the current page to get a new CAPTCHA
-    window.location.reload();
-}
-</script>
