@@ -1,16 +1,16 @@
-# 🦀 RustWall - Advanced Firewall and Security System 🛡️
+# 🦀 RustWall 🛡️
 
-RustWall is a comprehensive Rust-based security solution that provides advanced firewall capabilities, DDoS protection, CAPTCHA verification, and specialized security features for Tor networks and privacy-focused applications. Built using Axum and Tera templating, it offers a robust, modular security layer for your applications.
+RustWall is a comprehensive Rust-based security solution that provides advanced site protection capabilities, DDoS protection, CAPTCHA verification, and specialized security features for Tor networks and privacy-focused applications. Built using Axum and Tera templating, it offers a robust, modular security layer for your applications.
 
 ## ❓ What Problems Does RustWall Solve?
 
-- 🤖 **Automated Bot Prevention**: Advanced CAPTCHA system with analog clock challenges that effectively block automated scripts and bots without relying on JavaScript.
-- 🛡️ **DDoS Protection**: Comprehensive DDoS mitigation including rate limiting, IP blocking, and traffic analysis to prevent service outages.
-- 🔒 **Privacy & Anonymity**: Advanced anonymity features including traffic obfuscation, timing attack protection, and anti-correlation measures.
-- 🌐 **Tor Network Security**: Specialized security features for .onion services including circuit analysis and rendezvous point protection.
-- 🔍 **Content Security**: JavaScript sanitization, metadata removal, and fingerprinting protection.
-- 🚨 **Operational Security**: Emergency shutdown capabilities, warrant canary systems, and comprehensive audit logging.
-- 🌍 **Network Integration**: Advanced Tor integration with multi-onion management and steganographic channels.
+- 🤖 **Automated Bot Prevention**: Advanced CAPTCHA system with analog clock challenges that effectively block automated scripts and bots without relying on JavaScript. [✅ COMPLETED]
+- 🛡️ **DDoS Protection**: Comprehensive DDoS mitigation including rate limiting, IP blocking, and traffic analysis to prevent service outages.  [🔄 IN PROGRESS]
+- 🔒 **Privacy & Anonymity**: Advanced anonymity features including traffic obfuscation, timing attack protection, and anti-correlation measures. [🔄 IN PROGRESS]
+- 🌐 **Tor Network Security**: Specialized security features for .onion services including circuit analysis and rendezvous point protection. [🔄 IN PROGRESS]
+- 🔍 **Content Security**: JavaScript sanitization, metadata removal, and fingerprinting protection. [🔄 IN PROGRESS]
+- 🚨 **Operational Security**: Emergency shutdown capabilities, warrant canary systems, and comprehensive audit logging. [🔄 IN PROGRESS]
+- 🌍 **Network Integration**: Advanced Tor integration with multi-onion management and steganographic channels. [🔄 IN PROGRESS]
 
 ## 🏗️ Architecture
 
