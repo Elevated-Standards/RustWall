@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock CAPTCHA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .captcha-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .captcha-image {
+            margin: 20px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .form-group {
+            margin: 20px 0;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="number"] {
+            width: 60px;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: center;
+        }
+        input[type="number"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        .time-inputs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .refresh-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #666;
+            text-decoration: none;
+        }
+        .refresh-link:hover {
+            color: #333;
+        }
+        .error {
+            color: #d32f2f;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #ffebee;
+            border-radius: 4px;
+        }
+        .success {
+            color: #2e7d32;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f5e8;
+            border-radius: 4px;
+        }
+        .instructions {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            color: #1565c0;
+        }
+    </style>
+</head>
+<body>
+    <div class="captcha-container">
+        <h1>Clock CAPTCHA Verification</h1>
+        
+        <div class="instructions">
+            <strong>Instructions:</strong> Look at the clock below and enter the time shown. 
+            Enter the hour (1-12) and minute (0-59) that the clock hands are pointing to.
+        </div>
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+
+        {% if success %}
+        <div class="success">{{ success }}</div>
+        {% else %}
+        <form method="POST" action="/captcha/verify">
+            <div class="captcha-image">
+                <img src="/captcha/image/{{ session_id }}" alt="Clock CAPTCHA" width="200" height="200">
+            </div>
+            
+            <div class="form-group">
+                <label>What time is shown on the clock?</label>
+                <div class="time-inputs">
+                    <input type="number" name="hour" min="1" max="12" placeholder="Hour" required>
+                    <span>:</span>
+                    <input type="number" name="minute" min="0" max="59" placeholder="Min" required>
+                </div>
+            </div>
+            
+            <input type="hidden" name="session_id" value="{{ session_id }}">
+            <button type="submit">Verify</button>
+        </form>
+        
+        <a href="/captcha/form" class="refresh-link">🔄 Get a new CAPTCHA</a>
+        {% endif %}
+    </div>
+</body>
+</html>
