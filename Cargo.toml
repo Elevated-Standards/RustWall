@@ -9,7 +9,7 @@ homepage = "https://github.com/austinsonger/rustwall"
 repository = "https://github.com/austinsonger/rustwall"
 license = "MIT"
 readme = "README.md"
-keywords = ["firewall", "security", "ddos", "captcha", "tor", "privacy", "anonymity"]
+keywords = ["security", "ddos", "captcha", "privacy", "anonymity"]
 categories = ["network-programming", "web-programming", "cryptography", "authentication"]
 exclude = [
     "/.github/",
