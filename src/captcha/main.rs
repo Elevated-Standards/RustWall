@@ -32,7 +32,7 @@ struct CaptchaVerifyForm {
     session_id: String,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 struct CaptchaQuery {
     session_id: Option<String>,
 }
@@ -221,13 +221,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("Starting Clock CAPTCHA server...");
 
     // Initialize Tera templates
-    let mut tera = match Tera::new("templates/**/*") {
-        Ok(t) => t,
-        Err(e) => {
-            error!("Failed to initialize Tera templates: {}", e);
-            return Err(Box::new(e));
-        }
-    };
+    let mut tera = Tera::new("templates/**/*")?;
     tera.autoescape_on(vec!["html"]);
 
     // Initialize session store
@@ -254,21 +248,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .layer(CorsLayer::permissive())
         .with_state(app_state);
 
-    let listener = match tokio::net::TcpListener::bind("127.0.0.1:3000").await {
-        Ok(l) => l,
-        Err(e) => {
-            error!("Failed to bind to address: {}", e);
-            return Err(Box::new(e));
-        }
-    };
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000").await?;
 
     info!("🕐 Clock CAPTCHA server running on http://127.0.0.1:3000");
     info!("📋 Test the CAPTCHA at: http://127.0.0.1:3000/captcha/form");
 
-    if let Err(e) = axum::serve(listener, app).await {
-        error!("Server error: {}", e);
-        return Err(Box::new(e));
-    }
+    axum::serve(listener, app).await?;
 
     Ok(())
 }

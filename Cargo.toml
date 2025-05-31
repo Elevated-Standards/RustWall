@@ -56,6 +56,8 @@ tera = "1.19"
 # Logging
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+log = "0.4"
+env_logger = "0.10"
 
 # Configuration
 config = { version = "0.14", optional = true }
