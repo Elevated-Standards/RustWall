@@ -1,6 +1,6 @@
 [package]
 name = "rustwall"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 authors = ["austin@songer.me"]
 description = "Advanced Rust-based firewall and security system with DDoS protection, CAPTCHA verification, and specialized Tor network security features"
